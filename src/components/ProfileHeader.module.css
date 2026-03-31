@@ -1,0 +1,141 @@
+.header {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 24px;
+  background: #111318;
+  border: 1px solid #21262D;
+  border-radius: 8px;
+  margin-top: 24px;
+  transition: box-shadow 150ms ease;
+}
+
+.header:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.avatarLink {
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: block;
+  transition: outline 150ms ease;
+}
+
+.avatarLink:hover,
+.avatarLink:focus-visible {
+  outline: 2px solid #3FB950;
+  outline-offset: 2px;
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 2px solid #21262D;
+  display: block;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #F0F6FC;
+  margin: 0 0 4px;
+}
+
+.nameLink {
+  color: inherit;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.nameLink:hover {
+  color: #3FB950;
+  text-decoration: underline;
+}
+
+.nameLink:focus-visible {
+  outline: 2px solid #3FB950;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.username {
+  font-size: 14px;
+  color: #7D8590;
+  margin: 0 0 10px;
+}
+
+.bio {
+  font-size: 14px;
+  color: #F0F6FC;
+  margin: 0 0 14px;
+  line-height: 1.5;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.metaItem {
+  font-size: 12px;
+  font-weight: 500;
+  color: #7D8590;
+}
+
+.metaLink {
+  font-size: 12px;
+  font-weight: 500;
+  color: #3FB950;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.metaLink:hover {
+  color: #56d364;
+  text-decoration: underline;
+}
+
+.metaLink:focus-visible {
+  outline: 2px solid #3FB950;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.githubLink {
+  font-size: 12px;
+  font-weight: 500;
+  color: #58A6FF;
+  text-decoration: none;
+  transition: color 150ms ease, text-decoration 150ms ease;
+}
+
+.githubLink:hover {
+  color: #79c0ff;
+  text-decoration: underline;
+}
+
+.githubLink:focus-visible {
+  outline: 2px solid #58A6FF;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (max-width: 640px) {
+  .header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .meta {
+    justify-content: center;
+  }
+}

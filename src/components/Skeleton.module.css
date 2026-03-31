@@ -1,0 +1,130 @@
+@keyframes shimmer {
+  0% {
+    background-position: -600px 0;
+  }
+  100% {
+    background-position: 600px 0;
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    #161B22 25%,
+    #21262D 50%,
+    #161B22 75%
+  );
+  background-size: 1200px 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+.wrapper {
+  margin-top: 24px;
+}
+
+/* ── Profile card ─────────────────────────────── */
+.profileCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 24px;
+  background: #161B22;
+  border: 1px solid #30363D;
+  border-radius: 8px;
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.profileLines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 6px;
+}
+
+.nameLine {
+  height: 20px;
+  width: 200px;
+  max-width: 100%;
+}
+
+.usernameLine {
+  height: 14px;
+  width: 130px;
+}
+
+.bioLine {
+  height: 14px;
+  width: 90%;
+  max-width: 360px;
+}
+
+.bioLineShort {
+  height: 14px;
+  width: 60%;
+  max-width: 240px;
+}
+
+/* ── Content area ─────────────────────────────── */
+.content {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.statsCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.statCard {
+  height: 82px;
+  border-radius: 8px;
+}
+
+.reposCol {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.repoCard {
+  height: 120px;
+  border-radius: 8px;
+}
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width: 1024px) {
+  .reposCol {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .profileCard {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profileLines {
+    align-items: center;
+    width: 100%;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .reposCol {
+    grid-template-columns: 1fr;
+  }
+}

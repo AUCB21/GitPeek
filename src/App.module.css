@@ -1,0 +1,162 @@
+.app {
+  min-height: 100vh;
+  background: #0A0C10;
+}
+
+/* Decorative rainbow top bar */
+.app::before {
+  content: '';
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg, #3FB950, #58A6FF, #BC8CFF);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.header {
+  padding: 28px 16px 24px;
+  text-align: center;
+  border-bottom: 1px solid #21262D;
+  background: linear-gradient(135deg, #0A0C10 0%, #0D1117 100%);
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #3FB950;
+  margin: 0 0 6px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #7D8590;
+  margin: 0;
+}
+
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 16px 64px;
+}
+
+.error {
+  margin-top: 16px;
+  padding: 12px 16px;
+  background: #111318;
+  border: 1px solid #21262D;
+  border-left: 3px solid #f85149;
+  border-radius: 8px;
+  color: #f85149;
+  font-size: 14px;
+}
+
+/* ── Landing state ─────────────────────────────── */
+.landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: 64px;
+  text-align: center;
+}
+
+.landingIcon {
+  color: #21262D;
+}
+
+.landingTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: #F0F6FC;
+  margin: 0;
+}
+
+.landingText {
+  font-size: 14px;
+  color: #7D8590;
+  max-width: 360px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.pill {
+  background: #111318;
+  border: 1px solid #21262D;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: #7D8590;
+}
+
+/* ── Results layout ────────────────────────────── */
+.content {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+  margin-top: 24px;
+}
+
+.statsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reposColumn {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-content: start;
+}
+
+.emptyRepos {
+  color: #7D8590;
+  font-size: 14px;
+  grid-column: 1 / -1;
+}
+
+.footer {
+  text-align: center;
+  padding: 24px 16px;
+  border-top: 1px solid #21262D;
+  font-size: 12px;
+  color: #7D8590;
+}
+
+.footerLink {
+  color: #7D8590;
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.footerLink:hover {
+  color: #F0F6FC;
+  text-decoration: underline;
+}
+
+@media (max-width: 1024px) {
+  .reposColumn {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .reposColumn {
+    grid-template-columns: 1fr;
+  }
+}
