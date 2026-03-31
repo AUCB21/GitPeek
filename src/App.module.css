@@ -113,6 +113,45 @@
   gap: 16px;
 }
 
+/* Right column: wraps the search/filter controls + the repo grid */
+.reposSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+/* Search + filter bar */
+.repoControls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.repoSearch {
+  background: #111318;
+  border: 1px solid #21262D;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: #F0F6FC;
+  font-family: inherit;
+  width: 100%;
+  max-width: 340px;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+
+.repoSearch::placeholder {
+  color: #7D8590;
+}
+
+.repoSearch:focus {
+  border-color: #3FB950;
+  box-shadow: 0 0 0 3px rgba(63, 185, 80, 0.12);
+}
+
+/* Repo grid */
 .reposColumn {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -126,6 +165,38 @@
   grid-column: 1 / -1;
 }
 
+/* No-results state (search/filter returned 0 matches) */
+.noResults {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 40px 0;
+  text-align: center;
+}
+
+.noResultsText {
+  font-size: 14px;
+  color: #7D8590;
+}
+
+.clearSearchBtn {
+  background: none;
+  border: none;
+  color: #3FB950;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  padding: 0;
+  transition: color 150ms ease;
+}
+
+.clearSearchBtn:hover {
+  color: #56d364;
+}
+
+/* ── Footer ────────────────────────────────────── */
 .footer {
   text-align: center;
   padding: 24px 16px;

@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import SearchBar from './components/SearchBar.jsx'
 import ProfileHeader from './components/ProfileHeader.jsx'
 import StatsCard from './components/StatsCard.jsx'
 import RepoCard from './components/RepoCard.jsx'
+import RepoFilters from './components/RepoFilters.jsx'
 import Skeleton from './components/Skeleton.jsx'
 import styles from './App.module.css'
 
@@ -32,18 +33,9 @@ function LandingIllustration() {
       className={styles.landingIcon}
     >
       <circle cx="40" cy="40" r="38" stroke="#21262D" strokeWidth="1.5" />
-      {/* Eyes */}
       <circle cx="29" cy="36" r="4.5" fill="#21262D" />
       <circle cx="51" cy="36" r="4.5" fill="#21262D" />
-      {/* Smile */}
-      <path
-        d="M 28 50 Q 40 60 52 50"
-        stroke="#21262D"
-        strokeWidth="2"
-        strokeLinecap="round"
-        fill="none"
-      />
-      {/* Decorative ear-tentacles (octocat nod) */}
+      <path d="M 28 50 Q 40 60 52 50" stroke="#21262D" strokeWidth="2" strokeLinecap="round" fill="none" />
       <path d="M 18 30 Q 13 20 20 14" stroke="#21262D" strokeWidth="1.5" strokeLinecap="round" fill="none" />
       <path d="M 62 30 Q 67 20 60 14" stroke="#21262D" strokeWidth="1.5" strokeLinecap="round" fill="none" />
     </svg>
@@ -55,10 +47,31 @@ export default function App() {
   const [error, setError] = useState(null)
   const [user, setUser] = useState(null)
   const [repos, setRepos] = useState([])
+  const [searchQuery, setSearchQuery] = useState('')
+  const [debouncedQuery, setDebouncedQuery] = useState('')
+  const [activeFilters, setActiveFilters] = useState({ languages: [], stars: 0, hasWebsite: false })
+  const debounceRef = useRef(null)
+
+  function handleRepoSearchChange(value) {
+    setSearchQuery(value)
+    clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(() => {
+      setDebouncedQuery(value.trim().toLowerCase())
+    }, 200)
+  }
+
+  function clearSearch() {
+    setSearchQuery('')
+    setDebouncedQuery('')
+  }
 
   async function handleSearch(username) {
     setLoading(true)
     setError(null)
+    // Reset search + filters on every new profile lookup
+    setSearchQuery('')
+    setDebouncedQuery('')
+    setActiveFilters({ languages: [], stars: 0, hasWebsite: false })
 
     try {
       const [userRes, reposRes] = await Promise.all([
@@ -95,7 +108,22 @@ export default function App() {
     }
   }
 
-  const topRepos = repos.slice(0, 10)
+  // Derive unique sorted language options from all fetched repos
+  const languageOptions = [...new Set(repos.map(r => r.language).filter(Boolean))].sort()
+
+  // Apply search + all three filters with AND logic
+  const filteredRepos = repos.filter(repo => {
+    if (debouncedQuery) {
+      const nameMatch = repo.name.toLowerCase().includes(debouncedQuery)
+      const descMatch = repo.description?.toLowerCase().includes(debouncedQuery) ?? false
+      if (!nameMatch && !descMatch) return false
+    }
+    if (activeFilters.languages.length > 0 && !activeFilters.languages.includes(repo.language)) return false
+    if (repo.stargazers_count < activeFilters.stars) return false
+    if (activeFilters.hasWebsite && !repo.homepage) return false
+    return true
+  })
+
   const topLanguage = computeTopLanguage(repos)
   const totalStars = computeTotalStars(repos)
   const showLanding = user === null && !loading && !error
@@ -144,12 +172,46 @@ export default function App() {
                 <StatsCard icon="⭐" label="Total Stars" value={totalStars.toLocaleString()} />
                 <StatsCard icon="💬" label="Top Language" value={topLanguage || '—'} />
               </div>
-              <div className={styles.reposColumn}>
-                {topRepos.length === 0 ? (
-                  <p className={styles.emptyRepos}>This user has no public repositories.</p>
-                ) : (
-                  topRepos.map(repo => <RepoCard key={repo.id} repo={repo} />)
+
+              <div className={styles.reposSection}>
+                {repos.length > 0 && (
+                  <div className={styles.repoControls}>
+                    <input
+                      className={styles.repoSearch}
+                      type="text"
+                      value={searchQuery}
+                      onChange={e => handleRepoSearchChange(e.target.value)}
+                      placeholder="Search repositories…"
+                      aria-label="Search repositories"
+                    />
+                    <RepoFilters
+                      languageOptions={languageOptions}
+                      activeFilters={activeFilters}
+                      onFilterChange={setActiveFilters}
+                    />
+                  </div>
                 )}
+
+                <div className={styles.reposColumn}>
+                  {repos.length === 0 ? (
+                    <p className={styles.emptyRepos}>This user has no public repositories.</p>
+                  ) : filteredRepos.length === 0 ? (
+                    <div className={styles.noResults}>
+                      <p className={styles.noResultsText}>
+                        {debouncedQuery
+                          ? `No repositories match '${debouncedQuery}'`
+                          : 'No repositories match the active filters'}
+                      </p>
+                      {debouncedQuery && (
+                        <button className={styles.clearSearchBtn} onClick={clearSearch}>
+                          Clear search
+                        </button>
+                      )}
+                    </div>
+                  ) : (
+                    filteredRepos.map(repo => <RepoCard key={repo.id} repo={repo} />)
+                  )}
+                </div>
               </div>
             </div>
           </>

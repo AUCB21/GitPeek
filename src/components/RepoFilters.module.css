@@ -1,0 +1,141 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Language pills ─────────────────────────────── */
+.langGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.langPill {
+  background: #111318;
+  border: 1px solid #21262D;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-family: inherit;
+  color: #7D8590;
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.langPill:hover {
+  border-color: #3FB950;
+  color: #F0F6FC;
+}
+
+.langPillActive {
+  background: #3FB950;
+  border-color: #3FB950;
+  color: #0A0C10;
+  font-weight: 600;
+}
+
+.langPillActive:hover {
+  background: #56d364;
+  border-color: #56d364;
+}
+
+/* ── Bottom row ─────────────────────────────────── */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+/* ── Stars button group ─────────────────────────── */
+.btnGroup {
+  display: flex;
+}
+
+.starBtn {
+  padding: 5px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  background: #111318;
+  border: 1px solid #21262D;
+  color: #7D8590;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 150ms ease;
+}
+
+.starBtn:hover:not(.starBtnActive) {
+  color: #F0F6FC;
+  border-color: #7D8590;
+  z-index: 1;
+  position: relative;
+}
+
+/* Collapse adjacent borders */
+.btnMiddle,
+.btnLast {
+  margin-left: -1px;
+}
+
+.btnFirst  { border-radius: 8px 0 0 8px; }
+.btnMiddle { border-radius: 0; }
+.btnLast   { border-radius: 0 8px 8px 0; }
+
+.starBtnActive {
+  background: #3FB950;
+  border-color: #3FB950;
+  color: #0A0C10;
+  font-weight: 600;
+  position: relative;
+  z-index: 1; /* sit on top so its border isn't hidden by adjacent collapsed borders */
+}
+
+/* ── Has website toggle ─────────────────────────── */
+.toggleBtn {
+  padding: 5px 12px;
+  font-size: 12px;
+  font-family: inherit;
+  background: #111318;
+  border: 1px solid #21262D;
+  border-radius: 8px;
+  color: #7D8590;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 150ms ease;
+}
+
+.toggleBtn:hover:not(.toggleBtnActive) {
+  border-color: #58A6FF;
+  color: #58A6FF;
+}
+
+.toggleBtnActive {
+  background: rgba(88, 166, 255, 0.15);
+  border-color: #58A6FF;
+  color: #58A6FF;
+}
+
+/* ── Clear all button ───────────────────────────── */
+.clearBtn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-family: inherit;
+  color: #7D8590;
+  cursor: pointer;
+  padding: 5px 0;
+  transition: color 150ms ease;
+}
+
+.clearBtn:hover {
+  color: #F0F6FC;
+}
+
+/* ── Mobile ─────────────────────────────────────── */
+@media (max-width: 640px) {
+  .row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
